@@ -268,6 +268,22 @@ $(document).ready(function(argument) {
 
 	}
 
+	$('body').on('swipeleft',function(event){
+		moveLeft();
+	});
+
+	$('body').on('swiperight',function(event){
+		moveRight();
+	});
+
+	// $('body').on('swipeleft',function(event){
+	// 	console.log(event);
+	// });
+
+	// $('body').on('swipeleft',function(event){
+	// 	console.log(event);
+	// });	
+
 	$('body').on('keydown',function(event){
 		
 		if(!isOver){

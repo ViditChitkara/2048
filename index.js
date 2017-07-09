@@ -1,5 +1,4 @@
 $(document).ready(function(argument) {
-	
 	var tiles;
 	var game;
 	var isOver;
@@ -268,27 +267,25 @@ $(document).ready(function(argument) {
 
 	}
 
-	$('body').on('swipeleft',function(event){
-		moveLeft();
-	});
+	var afterMove = function(){
+		var same = isSame();
+		updateBoard();
 
-	$('body').on('swiperight',function(event){
-		moveRight();
-	});
+		if(!movePossible()){
+		    isOver = true;
+			$('#game-over').fadeIn();
+		}
 
-	// $('body').on('swipeleft',function(event){
-	// 	console.log(event);
-	// });
-
-	// $('body').on('swipeleft',function(event){
-	// 	console.log(event);
-	// });	
+		if(!same){
+			setTimeout(function(){
+		       	getRandom();
+	  		},110);
+		}	
+	}
 
 	$('body').on('keydown',function(event){
-		
 		if(!isOver){
 			if(event.key=='ArrowDown'){
-				
 				moveDown();
 
 			}
@@ -311,21 +308,54 @@ $(document).ready(function(argument) {
 
 			}
 
-			var same = isSame();
-			updateBoard();
-
-			if(!movePossible()){
-			    isOver = true;
-				$('#game-over').fadeIn();
-			}
-
-			if(!same){
-				setTimeout(function(){
-		        	getRandom();
-		  		},110);
-			}
+			afterMove();
 		}
 	});
+
+	document.addEventListener('touchstart', handleTouchStart, false);        
+	document.addEventListener('touchmove', handleTouchMove, false);
+
+	var xDown = null;                                                        
+	var yDown = null;                                                        
+
+	function handleTouchStart(evt) {                                         
+	    xDown = evt.touches[0].clientX;                                      
+	    yDown = evt.touches[0].clientY;                                      
+	};                                                
+
+	function handleTouchMove(evt) {
+	    if ( ! xDown || ! yDown ) {
+	        return;
+	    }
+
+	    var xUp = evt.touches[0].clientX;                                    
+	    var yUp = evt.touches[0].clientY;
+
+	    var xDiff = xDown - xUp;
+	    var yDiff = yDown - yUp;
+
+	    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+	        if ( xDiff > 0 ) {
+	            /* left swipe */ 
+	            moveLeft();
+	        } else {
+	            /* right swipe */
+	            moveRight();
+	        }                       
+	    } else {
+	        if ( yDiff > 0 ) {
+	            /* up swipe */ 
+	            moveUp();
+	        } else { 
+	            /* down swipe */
+	            moveDown();
+	        }                                                                 
+	    }
+	    /* reset values */
+	    xDown = null;
+	    yDown = null;  
+	    afterMove();                                           
+	};
 
 	//------------------------------------------
 	$('#button').click(function(event){

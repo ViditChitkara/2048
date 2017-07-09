@@ -203,7 +203,7 @@ a#button{
 	}
 
 	#board>div.row>div.color_above{
-		font-size: 32px;
+		font-size: 200%;
 	}
 
 }

@@ -50,6 +50,21 @@ $(document).ready(function(argument) {
 		}
 		else if(num>64){
 			c.text(num);
+			if(c.text().length==5){
+				c.css('font-size','150%');
+			}
+
+			else if(c.text().length==6){
+				c.css('font-size','120%');
+			}
+
+			else if(c.text().length==7){
+				c.css('font-size','100%');
+			}
+
+			else if(c.text().length==8){
+				c.css('font-size','90%');
+			}
 			c.removeClass(c.attr('class')).addClass('color_above');
 		}
 
@@ -312,8 +327,8 @@ $(document).ready(function(argument) {
 		}
 	});
 
-	document.addEventListener('touchstart', handleTouchStart, false);        
-	document.addEventListener('touchmove', handleTouchMove, false);
+	document.getElementById('board').addEventListener('touchstart', handleTouchStart, false);        
+	document.getElementById('board').addEventListener('touchmove', handleTouchMove, false);
 
 	var xDown = null;                                                        
 	var yDown = null;                                                        
